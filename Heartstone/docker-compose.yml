@@ -1,0 +1,24 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '5000:5000'
+    depends_on:
+      - db
+    environment:
+      - MONGO_URI=mongodb://db:27017/HeartstoneDB
+      - ASPNETCORE_ENVIRONMENT=Production
+    volumes:
+      - ./appsettings.json:/app/appsettings.json
+  db:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+volumes:
+  mongo-data:
+
